@@ -20,5 +20,3 @@ dist
 .yarn
 
 storybook-static
-
-.cache/

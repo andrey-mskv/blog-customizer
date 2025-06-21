@@ -1,0 +1,1 @@
+import '/Users/moskvin/Documents/dev/10_sprint/blog-customizer/node_modules/@storybook/core-server/dist/presets/common-manager.js';
