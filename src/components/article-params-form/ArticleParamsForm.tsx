@@ -55,11 +55,11 @@ export const ArticleParamsForm = (props: ArticleParamsFormProps) => {
 		onClickOutside: () => {
 			setIsMenuOpen(false);
 		},
-		rootRef: rootRef,
+		rootRef,
 	});
 
 	return (
-		<>
+		<div ref={rootRef}>
 			<ArrowButton
 				isOpen={isMenuOpen}
 				onClick={() => {
@@ -67,7 +67,6 @@ export const ArticleParamsForm = (props: ArticleParamsFormProps) => {
 				}}
 			/>
 			<aside
-				ref={rootRef}
 				className={clsx(styles.container, {
 					[styles.container_open]: isMenuOpen,
 				})}>
@@ -132,6 +131,6 @@ export const ArticleParamsForm = (props: ArticleParamsFormProps) => {
 					</div>
 				</form>
 			</aside>
-		</>
+		</div>
 	);
 };

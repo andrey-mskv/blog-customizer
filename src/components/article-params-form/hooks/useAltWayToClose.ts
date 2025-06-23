@@ -12,13 +12,10 @@ export const useAltWayToClose = ({
 	onClickOutside,
 }: UseAltWayToCloseProps) => {
 	useEffect(() => {
-		if (!isOpen) return; // Если меню не открыто, не добавляем обработчик клика
-
 		const handleClick = (event: MouseEvent) => {
 			const { target } = event;
 			if (target instanceof Node && !rootRef.current?.contains(target)) {
-				// Проверяем, что клик был вне корневого элемента
-				onClickOutside();
+				isOpen && onClickOutside();
 			}
 		};
 
@@ -28,12 +25,12 @@ export const useAltWayToClose = ({
 			}
 		};
 
-		window.addEventListener('mousedown', handleClick); // обработчик клика
+		window.addEventListener('mouseup', handleClick); // обработчик клика
 		window.addEventListener('keydown', handleKeyDown); // обработчик нажатия клавиши Escape
 
 		return () => {
-			window.removeEventListener('mousedown', handleClick);
+			window.removeEventListener('mouseup', handleClick);
 			window.removeEventListener('keydown', handleKeyDown);
 		};
-	}, [isOpen, onClickOutside]); //
+	}, [isOpen, onClickOutside, rootRef]); //
 };
