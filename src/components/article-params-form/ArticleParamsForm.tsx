@@ -3,7 +3,7 @@ import { Button } from 'src/ui/button';
 import { Select } from 'src/ui/select';
 
 import styles from './ArticleParamsForm.module.scss';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import {
 	ArticleStateType,
 	backgroundColors,
@@ -16,6 +16,8 @@ import {
 import { RadioGroup } from 'src/ui/radio-group';
 import { Text } from 'src/ui/text';
 import { Separator } from 'src/ui/separator';
+import { useAltWayToClose } from './hooks/useAltWayToClose';
+import clsx from 'clsx';
 
 type ArticleParamsFormProps = {
 	setArticleState: (state: ArticleStateType) => void;
@@ -25,7 +27,7 @@ export const ArticleParamsForm = (props: ArticleParamsFormProps) => {
 	const { setArticleState } = props;
 
 	// Состояние для управления открытием/закрытием формы
-	const [isOpen, setIsOpen] = useState(false);
+	const [isMenuOpen, setIsMenuOpen] = useState(false);
 
 	// Состояние формы
 	const [formState, setFormState] =
@@ -34,29 +36,41 @@ export const ArticleParamsForm = (props: ArticleParamsFormProps) => {
 	// Обработчик отправки формы
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
+
 		setArticleState(formState);
-		setIsOpen(false);
+		setIsMenuOpen(false);
 	};
 
 	// Обработчик сброса формы
 	const handleReset = () => {
 		setFormState(defaultArticleState);
 		setArticleState(defaultArticleState);
-		setIsOpen(false);
+		setIsMenuOpen(false);
 	};
+
+	const rootRef = useRef<HTMLDivElement>(null); // Ссылка на корневой элемент
+
+	useAltWayToClose({
+		isOpen: isMenuOpen,
+		onClickOutside: () => {
+			setIsMenuOpen(false);
+		},
+		rootRef: rootRef,
+	});
 
 	return (
 		<>
 			<ArrowButton
-				isOpen={isOpen}
+				isOpen={isMenuOpen}
 				onClick={() => {
-					setIsOpen(!isOpen);
+					setIsMenuOpen(!isMenuOpen);
 				}}
 			/>
 			<aside
-				className={`${styles.container} ${
-					isOpen ? styles.container_open : ''
-				}`}>
+				ref={rootRef}
+				className={clsx(styles.container, {
+					[styles.container_open]: isMenuOpen,
+				})}>
 				<form className={styles.form} onSubmit={handleSubmit}>
 					<Text size={31} weight={800} uppercase>
 						задайте параметры
