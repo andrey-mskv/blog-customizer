@@ -38,7 +38,7 @@ export const ArticleParamsForm = (props: ArticleParamsFormProps) => {
 		e.preventDefault();
 
 		setArticleState(formState);
-		setIsMenuOpen(false);
+		setIsMenuOpen(true);
 	};
 
 	// Обработчик сброса формы
