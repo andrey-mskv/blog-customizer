@@ -22,3 +22,4 @@ dist
 storybook-static
 
 .cache
+.DS_Store
