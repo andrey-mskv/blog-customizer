@@ -1,1 +1,0 @@
-import '/Users/moskvin/Documents/dev/10_sprint/blog-customizer/node_modules/@storybook/addon-interactions/dist/manager.js';
